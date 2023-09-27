@@ -23,7 +23,7 @@
          </viewport>
       </ImageView>
       <Button fx:id="primaryButton" layoutX="14.0" layoutY="13.0" onAction="#switchToSecondary" text="HOME" />
-      <Button layoutX="378.0" layoutY="312.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="49.0" text="Send" />
+      <Button layoutX="378.0" layoutY="312.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="49.0" text="Send" onAction="#handleSendButton" />
       <TextField layoutX="14.0" layoutY="313.0" prefHeight="26.0" prefWidth="355.0" />
       <TextArea layoutX="14.0" layoutY="44.0" prefHeight="256.0" prefWidth="414.0" />
       <ListView layoutX="455.0" layoutY="44.0" prefHeight="256.0" prefWidth="160.0" />

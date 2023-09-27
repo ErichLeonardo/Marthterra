@@ -21,7 +21,7 @@ public class HomeController {
     private TextArea textArea;
 
     @FXML
-    private void switchToPrimary() throws IOException {
+    private void switchToRoom() throws IOException {
         App.setRoot("room1");
     }
 

@@ -22,7 +22,7 @@
             <Rectangle2D />
          </viewport>
       </ImageView>
-      <Button fx:id="primaryButton" layoutX="14.0" layoutY="13.0" onAction="#switchToSecondary" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 5px;" text="HOME" textFill="WHITE">
+      <Button fx:id="primaryButton" layoutX="14.0" layoutY="13.0" onAction="#switchToHome" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 5px;" text="HOME" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font></Button>

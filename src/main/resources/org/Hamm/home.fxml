@@ -20,7 +20,7 @@
                 <Rectangle2D />
             </viewport>
         </ImageView>
-        <Button fx:id="secondaryButton" layoutX="469.0" layoutY="290.0" onAction="#switchToPrimary" style="-fx-background-color: TRANSPARENT;" text="START" textFill="WHITE">
+        <Button fx:id="secondaryButton" layoutX="469.0" layoutY="290.0" onAction="#switchToRoom" style="-fx-background-color: TRANSPARENT;" text="START" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="20.0" />
          </font></Button>

@@ -18,7 +18,7 @@ public class ChatController {
     private TextArea textArea;
 
     @FXML
-    private void switchToSecondary() throws IOException {
+    private void switchToHome() throws IOException {
         App.setRoot("home");
     }
 

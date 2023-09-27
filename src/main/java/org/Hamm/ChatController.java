@@ -10,15 +10,13 @@ public class ChatController {
 
     @FXML
     private Button primaryButton;
-
     @FXML
     private Button sendButton;
-
     @FXML
     private TextField textField;
-
     @FXML
     private TextArea textArea;
+
     @FXML
     private void switchToSecondary() throws IOException {
         App.setRoot("secondary");

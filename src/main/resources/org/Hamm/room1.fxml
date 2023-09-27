@@ -14,7 +14,7 @@
 
 <AnchorPane prefHeight="348.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Hamm.ChatController">
    <children>
-      <ImageView depthTest="DISABLE" fitHeight="393.0" fitWidth="642.0" layoutY="-8.0" preserveRatio="true" AnchorPane.bottomAnchor="-37.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-27.0" AnchorPane.topAnchor="-8.0">
+      <ImageView depthTest="DISABLE" fitHeight="361.0" fitWidth="664.0" layoutY="-8.0" preserveRatio="true" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-49.0" AnchorPane.topAnchor="-8.0">
          <image>
             <Image url="@space.jpg" />
          </image>
@@ -23,11 +23,11 @@
          </viewport>
       </ImageView>
       <Button fx:id="primaryButton" layoutX="14.0" layoutY="13.0" onAction="#switchToSecondary" text="HOME" />
-      <Button layoutX="378.0" layoutY="312.0" mnemonicParsing="false" onAction="#handleSendButton" prefHeight="26.0" prefWidth="49.0" text="Send" />
+      <Button layoutX="422.0" layoutY="311.0" mnemonicParsing="false" onAction="#handleSendButton" prefHeight="26.0" prefWidth="49.0" text="Send" />
       <TextField layoutX="14.0" layoutY="313.0" prefHeight="26.0" prefWidth="355.0" />
-      <TextArea layoutX="14.0" layoutY="44.0" prefHeight="256.0" prefWidth="414.0" />
-      <ListView layoutX="455.0" layoutY="44.0" prefHeight="256.0" prefWidth="160.0" />
-      <Label layoutX="499.0" layoutY="17.0" text="Online Users" textFill="WHITE">
+      <TextArea layoutX="14.0" layoutY="44.0" prefHeight="256.0" prefWidth="458.0" />
+      <ListView layoutX="484.0" layoutY="46.0" prefHeight="256.0" prefWidth="143.0" />
+      <Label layoutX="520.0" layoutY="17.0" text="Online Users" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>

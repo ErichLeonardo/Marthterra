@@ -1,12 +1,15 @@
-package org.Hamm;
+package org.Hamm.XML;
+
+import org.Hamm.XML.Room;
+import org.Hamm.XML.Rooms;
+import org.Hamm.XML.User;
+import org.Hamm.XML.Users;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 

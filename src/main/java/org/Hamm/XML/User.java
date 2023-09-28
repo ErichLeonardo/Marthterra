@@ -1,4 +1,4 @@
-package org.Hamm;
+package org.Hamm.XML;
 
 public class User {
     private String name;

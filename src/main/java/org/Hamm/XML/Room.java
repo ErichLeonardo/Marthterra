@@ -1,4 +1,4 @@
-package org.Hamm;
+package org.Hamm.XML;
 
 import java.util.List;
 

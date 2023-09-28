@@ -1,5 +1,6 @@
-package org.Hamm;
-import java.util.ArrayList;
+package org.Hamm.XML;
+import org.Hamm.XML.Room;
+
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

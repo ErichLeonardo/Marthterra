@@ -3,6 +3,7 @@ package org.Hamm;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
@@ -16,6 +17,8 @@ public class ChatController {
     private TextField textField;
     @FXML
     private TextArea textArea;
+    @FXML
+    private ListView listView;
 
     @FXML
     private void switchToHome() throws IOException {

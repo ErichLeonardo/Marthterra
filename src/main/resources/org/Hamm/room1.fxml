@@ -14,7 +14,7 @@
 
 <AnchorPane prefHeight="348.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Hamm.ChatController">
    <children>
-      <ImageView depthTest="DISABLE" fitHeight="361.0" fitWidth="664.0" preserveRatio="true" AnchorPane.bottomAnchor="-13.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-14.007824707031205" AnchorPane.topAnchor="0.0">
+      <ImageView depthTest="DISABLE" fitHeight="361.0" fitWidth="664.0" preserveRatio="true">
          <image>
             <Image url="@room.jpg" />
          </image>

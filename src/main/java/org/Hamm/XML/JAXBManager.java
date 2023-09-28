@@ -1,9 +1,7 @@
 package org.Hamm.XML;
 
-import org.Hamm.XML.Room;
-import org.Hamm.XML.Rooms;
-import org.Hamm.XML.User;
-import org.Hamm.XML.Users;
+import org.Hamm.model.Room;
+import org.Hamm.model.User;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

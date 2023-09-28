@@ -1,5 +1,5 @@
 package org.Hamm.XML;
-import org.Hamm.XML.Room;
+import org.Hamm.model.Room;
 
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;

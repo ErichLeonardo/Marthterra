@@ -7,4 +7,6 @@ module org.Hamm {
     exports org.Hamm;
     exports org.Hamm.XML;
     opens org.Hamm.XML to javafx.fxml;
+    exports org.Hamm.model;
+    opens org.Hamm.model to javafx.fxml;
 }

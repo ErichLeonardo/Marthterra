@@ -1,4 +1,6 @@
-package org.Hamm.XML;
+package org.Hamm.model;
+
+import org.Hamm.model.User;
 
 import java.util.List;
 

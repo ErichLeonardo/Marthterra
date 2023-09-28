@@ -1,5 +1,5 @@
 package org.Hamm.XML;
-import org.Hamm.XML.User;
+import org.Hamm.model.User;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,7 +2,7 @@ package org.Hamm;
 
 public class Room {
     private String name;
-    User users;
+    User users; //poner una lista en vez de esta mierda
 
     public String getName() {
         return name;

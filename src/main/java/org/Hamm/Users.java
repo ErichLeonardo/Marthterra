@@ -12,7 +12,7 @@ public class Users implements java.io.Serializable {
     @XmlElement(name = "user", type=User.class)
     private List<User> users = new ArrayList<>();
 
-    Users(){}
+    public Users(){}
 
     public List<User> getUsers(){
         return users;

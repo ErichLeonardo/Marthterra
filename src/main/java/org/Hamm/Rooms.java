@@ -9,16 +9,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name= "rooms")
 public class Rooms implements java.io.Serializable {
-    @XmlElement(name = "room", type=User.class)
-    private List<Room> rooms = new ArrayList<>();
+    private List<Room> rooms;
 
-    Rooms(){}
-
-    public List<Room> getRooms(){
+    @XmlElement(name = "room")
+    public List<Room> getRooms() {
         return rooms;
     }
 
-    public void setRooms(List<Room> rooms){
+    public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
     }
 }

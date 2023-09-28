@@ -1,8 +1,10 @@
 package org.Hamm;
 
+import java.util.List;
+
 public class Room {
     private String name;
-    User users; //poner una lista en vez de esta mierda
+    private List<User> users;
 
     public String getName() {
         return name;
@@ -12,12 +14,11 @@ public class Room {
         this.name = name;
     }
 
-    public User getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(User users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
-
 }

@@ -1,4 +1,4 @@
-package org.Hamm;
+package org.Hamm.Controller;
 
 import java.io.IOException;
 import javafx.fxml.FXML;
@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import org.Hamm.App;
 
 public class ChatController {
 

@@ -39,7 +39,7 @@ public class App extends Application {
         });
 
         // Carga la imagen del cursor personalizado con fondo transparente
-        Image customCursor = new Image(getClass().getResourceAsStream("/org/Hamm/cursor.png"));
+        Image customCursor = new Image(getClass().getResourceAsStream("/org/Hamm/sol.png"));
 
         scene.setOnMouseEntered(event -> {
             ImageCursor imageCursor = new ImageCursor(customCursor);

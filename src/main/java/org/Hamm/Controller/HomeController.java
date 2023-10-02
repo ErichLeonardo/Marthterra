@@ -4,9 +4,12 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.Hamm.App;
+import org.Hamm.model.User;
+import org.Hamm.model.UserHistory;
+import org.Hamm.util.JAXBManager;
+
 
 public class HomeController {
 
@@ -20,7 +23,32 @@ public class HomeController {
 
     @FXML
     private void switchToRoom() throws IOException {
-        App.setRoot("room1");
+        // Obtén el nombre del usuario desde el campo de texto
+        String userName = textField.getText();
+
+        // Verifica si el nombre de usuario no está vacío
+        if (!userName.isEmpty()) {
+            // Crea un objeto User y establece el nombre
+            User user = new User();
+            user.setName(userName);
+
+            // Guarda el objeto User en un archivo XML
+            JAXBManager.writeUser(user);
+
+            // Agrega el usuario al historial
+            UserHistory userHistory = JAXBManager.readUserHistory();
+            if (userHistory != null) {
+                // Agrega el nuevo usuario al historial
+                userHistory.addUser(user);
+
+                // Guarda el historial actualizado en un archivo XML
+                JAXBManager.writeUserHistory(userHistory);
+            }
+
+            App.setRoot("room1");
+        } else {
+            // Puedes mostrar un mensaje de error al usuario aquí si el campo está vacío
+        }
     }
 
 }

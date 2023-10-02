@@ -1,8 +1,9 @@
 package org.Hamm.model;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
 public class User {
     private String name;
-    boolean online;
 
     public String getName() {
         return name;
@@ -12,12 +13,5 @@ public class User {
         this.name = name;
     }
 
-    public boolean isOnline() {
-        return online;
-    }
-
-    public void setOnline(boolean online) {
-        this.online = online;
-    }
 
 }

@@ -29,7 +29,7 @@
                 <Font name="System Bold Italic" size="20.0" />
             </font>
         </Label>
-        <TextField layoutX="433.0" layoutY="64.0" />
+        <TextField fx:id="textField" layoutX="433.0" layoutY="64.0" />
         <ChoiceBox layoutX="432.0" layoutY="130.0" prefWidth="150.0" style="-fx-background-color: white;" />
         <Label layoutX="453.0" layoutY="99.0" text="Room Name:" textFill="WHITE">
             <font>

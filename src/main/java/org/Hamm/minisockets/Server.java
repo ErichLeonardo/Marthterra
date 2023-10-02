@@ -1,67 +1,82 @@
 package org.Hamm.minisockets;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class Server {
-    public static void main(String[] args) throws ClassNotFoundException {
+    private static MessagePersistence messagePersistence; // Instancia compartida
+
+    public static void main(String[] args) {
         ServerSocket serverSocket = null;
-        boolean serverListening=false;
+        boolean serverListening = false;
 
         try {
-            serverSocket=new ServerSocket(8080);
-            serverListening=true;
-        }catch (IOException e) {
+            serverSocket = new ServerSocket(8080);
+            serverListening = true;
+        } catch (IOException e) {
             System.out.println("Server: No se puede ejecutar el servidor en el puerto 8080");
         }
 
-        Socket socket=null;
-        ObjectInputStream in=null;
-        OutputStream out=null;
+        if (serverListening) {
+            messagePersistence = new MessagePersistence(); // Inicializa la instancia compartida
+            System.out.println("Server: Listo para recibir mensajes");
 
-        if(serverListening) {
+            while (true) {
+                try {
+                    Socket socket = serverSocket.accept();
+                    Thread clientThread = new ClientHandler(socket);
+                    clientThread.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private static class ClientHandler extends Thread {
+        private Socket socket;
+
+        public ClientHandler(Socket socket) {
+            this.socket = socket;
+        }
+
+        @Override
+        public void run() {
             try {
-                System.out.println("Server: Listo para recibir peticiones");
-                socket=serverSocket.accept();
+                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
-                String name=LocalTime.now().toString();
+                while (true) {
+                    String receivedMessage = in.readLine();
+                    if (receivedMessage == null || receivedMessage.equalsIgnoreCase("exit")) {
+                        break;
+                    }
 
-                File folder=new File(name);
-                if(folder.mkdir()) {
-                    in=new ObjectInputStream(socket.getInputStream());
-                    do {
-                        FileToBeTransfered ftbt = (FileToBeTransfered)in.readObject();
+                    // Obtener la hora actual y formatearla
+                    LocalTime currentTime = LocalTime.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+                    String formattedTime = currentTime.format(formatter);
 
-                        out=new BufferedOutputStream(new FileOutputStream(name+"/"+ftbt.getFilename()));
-                        out.write(ftbt.getFileData(), 0, ftbt.getFileSize());
-                        out.close();
-                    }while(socket.isConnected());
+                    // Crear el mensaje con la hora
+                    String messageWithTime = "[" + formattedTime + "] Cliente dice: " + receivedMessage;
 
-                    in.close();
-                }else {
-                    System.out.println("Server: no se puede crear la carpeta destino");
+                    // Guardar el mensaje en el historial
+                    messagePersistence.saveMessage("Cliente", messageWithTime);
+
+                    System.out.println(messageWithTime);
+
+                    // Responder al cliente
+                    out.println("Servidor responde: Hola desde el servidor");
+
                 }
 
-
                 socket.close();
-                serverSocket.close();
-                System.out.println("Server: Cerrando Servidor");
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-
-
-
-
         }
     }
 }

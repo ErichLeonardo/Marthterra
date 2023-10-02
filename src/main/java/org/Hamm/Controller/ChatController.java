@@ -1,12 +1,13 @@
 package org.Hamm.Controller;
 
-import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import org.Hamm.App;
+import org.Hamm.model.User;
+import org.Hamm.util.JAXBManager;
 
 public class ChatController {
 
@@ -19,19 +20,37 @@ public class ChatController {
     @FXML
     private TextArea textArea;
     @FXML
-    private ListView listView;
+    private ListView<String> listView;
+    @FXML
+    private Label userNameLabel; // Agrega un campo Label para mostrar el nombre de usuario
 
     @FXML
-    private void switchToHome() throws IOException {
-        App.setRoot("home");
+    private void initialize() {
+        // Inicializa la vista ChatController
+        // Puedes realizar configuraciones adicionales aquí si es necesario
+        User user = JAXBManager.readUser(); // Intenta leer el nombre de usuario desde el archivo XML
+        if (user != null) {
+            setUserName(user.getName()); // Configura el nombre de usuario en el Label
+        } else {
+            // Si el archivo no existe o no se pudo leer, puedes manejarlo aquí
+            // Por ejemplo, puedes mostrar un mensaje de error o pedir al usuario que ingrese su nombre.
+        }
+
+    }
+
+
+    @FXML
+    private void switchToHome() {
+        // Implementa el código para cambiar a la vista Home si es necesario
     }
 
     @FXML
     private void handleSendButton() {
-        // Aquí puedes agregar el código que se ejecutará cuando se haga clic en el botón "Send".
-        // Por ejemplo, enviar el contenido del campo de texto al chat.
-        String message = textField.getText();
-        // Realiza alguna acción con el mensaje, como enviarlo al chat.
+        // Implementa el código para enviar mensajes si es necesario
     }
 
+    // Método para establecer el nombre de usuario en el Label
+    public void setUserName(String userName) {
+        userNameLabel.setText("User: " + userName);
+    }
 }

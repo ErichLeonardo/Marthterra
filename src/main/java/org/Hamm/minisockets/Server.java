@@ -5,9 +5,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Server {
     private static MessagePersistence messagePersistence; // Instancia compartida
+    private static List<PrintWriter> clientWriters = new ArrayList<>(); // Almacena las referencias PrintWriter de los clientes
 
     public static void main(String[] args) {
         ServerSocket serverSocket = null;
@@ -27,7 +30,10 @@ public class Server {
             while (true) {
                 try {
                     Socket socket = serverSocket.accept();
-                    Thread clientThread = new ClientHandler(socket);
+                    PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                    clientWriters.add(out); // Agrega el PrintWriter del cliente a la lista
+
+                    Thread clientThread = new ClientHandler(socket, out);
                     clientThread.start();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -38,16 +44,20 @@ public class Server {
 
     private static class ClientHandler extends Thread {
         private Socket socket;
+        private PrintWriter clientOut; // Referencia PrintWriter del cliente
 
-        public ClientHandler(Socket socket) {
+        public ClientHandler(Socket socket, PrintWriter clientOut) {
             this.socket = socket;
+            this.clientOut = clientOut;
         }
 
         @Override
         public void run() {
             try {
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+
+                // Pide al cliente su nombre de usuario y guárdalo
+                String clientUsername = in.readLine();
 
                 while (true) {
                     String receivedMessage = in.readLine();
@@ -60,17 +70,19 @@ public class Server {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
                     String formattedTime = currentTime.format(formatter);
 
-                    // Crear el mensaje con la hora
-                    String messageWithTime = "[" + formattedTime + "] Cliente dice: " + receivedMessage;
+                    // Crear el mensaje con el nombre de usuario, la hora y el contenido del mensaje
+                    String messageWithTime = "[" + formattedTime + "] " + clientUsername + ": " + receivedMessage;
 
                     // Guardar el mensaje en el historial
-                    messagePersistence.saveMessage("Cliente", messageWithTime);
+                    messagePersistence.saveMessage(clientUsername, receivedMessage, formattedTime);
 
                     System.out.println(messageWithTime);
 
-                    // Responder al cliente
-                    out.println("Servidor responde: Hola desde el servidor");
-
+                    // Reenviar el mensaje a todos los clientes (incluido el remitente original)
+                    for (PrintWriter writer : clientWriters) {
+                        // Enviar el mensaje con un delimitador
+                        writer.println(messageWithTime);
+                    }
                 }
 
                 socket.close();

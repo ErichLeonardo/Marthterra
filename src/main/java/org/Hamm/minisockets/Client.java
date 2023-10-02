@@ -3,36 +3,55 @@ package org.Hamm.minisockets;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Scanner;
+import javafx.application.Platform; // Necesario para actualizar la GUI desde hilos distintos
+import javafx.scene.control.TextArea; // Reemplaza con la clase adecuada si es diferente
 
 public class Client {
-    public static void main(String[] args) {
-        if (args.length != 1) {
-            System.out.println("Usage: java Client ipServer");
-        } else {
-            String ipServer = args[0];
+    private Socket socket;
+    private BufferedReader in;
+    private PrintWriter out;
+    private TextArea textArea; // Referencia al TextArea de la vista ChatController
+    private String user; // Nombre de usuario del cliente
 
-            try {
-                Socket socket = new Socket(ipServer, 8080);
-                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+    public Client(String ipServer, TextArea textArea, String user) {
+        this.textArea = textArea;
+        this.user = user;
 
-                // Leer mensajes del usuario y enviarlos al servidor
-                Scanner scanner = new Scanner(System.in);
-                while (true) {
-                    System.out.print("Escribe un mensaje: ");
-                    String message = scanner.nextLine();
-                    out.println(message);
+        try {
+            socket = new Socket(ipServer, 8080);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream(), true);
 
-                    // Recibir respuesta del servidor
-                    String response = in.readLine();
-                    System.out.println("Servidor dice: " + response);
+            // Envia el nombre de usuario al servidor
+            out.println(user);
+
+            // Crear un hilo para recibir y mostrar mensajes del servidor
+            Thread receiveThread = new Thread(() -> {
+                try {
+                    while (true) {
+                        String message = in.readLine();
+                        if (message == null) {
+                            break; // Terminar el hilo si el servidor cierra la conexión
+                        }
+
+                        // Actualizar el TextArea en la GUI con el mensaje recibido
+                        Platform.runLater(() -> textArea.appendText(message + "\n"));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            });
+            receiveThread.start();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendMessage(String message) {
+        if (out != null) {
+            out.println(message); // Enviar el mensaje al servidor
         }
     }
 }

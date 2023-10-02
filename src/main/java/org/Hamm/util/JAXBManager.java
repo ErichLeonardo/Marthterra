@@ -8,7 +8,7 @@ import java.io.File;
 
 public class JAXBManager {
     private static final String USER_FILENAME = "user.xml"; // Nombre del archivo XML para el usuario actual
-    private static final String USER_HISTORY_FILENAME = "user_history.xml"; // Nombre del archivo XML para el historial
+    private static final String USER_HISTORY_FILENAME = "user_history.xml";
 
     public static User readUser() {
         try {
@@ -34,6 +34,20 @@ public class JAXBManager {
         }
     }
 
+
+
+    public static void writeUserHistory(UserHistory userHistory) {
+        try {
+            File file = new File(USER_HISTORY_FILENAME);
+            JAXBContext context = JAXBContext.newInstance(UserHistory.class);
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            marshaller.marshal(userHistory, file);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static UserHistory readUserHistory() {
         try {
             File file = new File(USER_HISTORY_FILENAME);
@@ -52,16 +66,4 @@ public class JAXBManager {
         }
     }
 
-
-    public static void writeUserHistory(UserHistory userHistory) {
-        try {
-            File file = new File(USER_HISTORY_FILENAME);
-            JAXBContext context = JAXBContext.newInstance(UserHistory.class);
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            marshaller.marshal(userHistory, file);
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
-    }
 }

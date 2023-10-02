@@ -1,5 +1,6 @@
 package org.Hamm.model;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,20 +13,12 @@ public class UserHistory {
         userList = new ArrayList<>();
     }
 
+    @XmlElement(name = "user")
     public List<User> getUserList() {
         return userList;
     }
 
     public void addUser(User user) {
         userList.add(user);
-    }
-
-    // Agrega un método para obtener la lista de usuarios conectados
-    public List<String> getConnectedUsers() {
-        List<String> connectedUsers = new ArrayList<>();
-        for (User user : userList) {
-            connectedUsers.add(user.getName());
-        }
-        return connectedUsers;
     }
 }

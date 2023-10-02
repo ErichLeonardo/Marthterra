@@ -32,23 +32,24 @@ public class HomeController {
             User user = new User();
             user.setName(userName);
 
-            // Guarda el objeto User en un archivo XML
+            // Guarda el usuario en su archivo XML individual
             JAXBManager.writeUser(user);
 
-            // Agrega el usuario al historial
+            // Obtiene el historial actual
             UserHistory userHistory = JAXBManager.readUserHistory();
-            if (userHistory != null) {
-                // Agrega el nuevo usuario al historial
-                userHistory.addUser(user);
 
-                // Guarda el historial actualizado en un archivo XML
-                JAXBManager.writeUserHistory(userHistory);
-            }
+            // Agrega el nuevo usuario al historial
+            userHistory.addUser(user);
+
+            // Guarda el historial actualizado en un archivo XML
+            JAXBManager.writeUserHistory(userHistory);
 
             App.setRoot("room1");
         } else {
             // Puedes mostrar un mensaje de error al usuario aquí si el campo está vacío
         }
     }
+
+
 
 }

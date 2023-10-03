@@ -30,6 +30,7 @@ public class Server {
             while (true) {
                 try {
                     Socket socket = serverSocket.accept();
+                    //System.out.println("Alguien llega");
                     PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                     clientWriters.add(out); // Agrega el PrintWriter del cliente a la lista
 
@@ -57,10 +58,14 @@ public class Server {
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
                 // Pide al cliente su nombre de usuario y guárdalo
+                //System.out.println("Esperando nombre de usuario");
                 String clientUsername = in.readLine();
-
+                //System.out.println("Listo para comunicar con "+clientUsername);
                 while (true) {
-                    String receivedMessage = in.readLine();
+                    String receivedMessage;
+                    receivedMessage= in.readLine();
+                    //while((receivedMessage= in.readLine())==null);
+
                     if (receivedMessage == null || receivedMessage.equalsIgnoreCase("exit")) {
                         break;
                     }
@@ -82,6 +87,7 @@ public class Server {
                     for (PrintWriter writer : clientWriters) {
                         // Enviar el mensaje con un delimitador
                         writer.println(messageWithTime);
+                        writer.flush();
                     }
                 }
 

@@ -41,9 +41,14 @@ public class ChatController {
     private BufferedReader serverIn;
     private PrintWriter serverOut;
 
+    public String parameter;
+
     @FXML
     private void initialize() {
 
+
+    }
+    public void start(){
         // Inicializa la vista ChatController
         // Puedes realizar configuraciones adicionales aquí si es necesario
         user = JAXBManager.readUser(); // Intenta leer el nombre de usuario desde el archivo XML
@@ -61,7 +66,7 @@ public class ChatController {
             socket = new Socket("localhost", 8080); // Reemplaza "localhost" con la dirección IP o el nombre del servidor
             serverIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             serverOut = new PrintWriter(socket.getOutputStream(), true);
-
+            serverOut.println(this.parameter);
             // Inicia un hilo para recibir mensajes del servidor en tiempo real
             Thread receiveThread = new Thread(this::receiveMessages);
             receiveThread.setDaemon(true);
@@ -70,7 +75,6 @@ public class ChatController {
             e.printStackTrace();
         }
     }
-
     @FXML
     private void switchToHome() {
         // Implementa el código para cambiar a la vista Home si es necesario
@@ -89,6 +93,7 @@ public class ChatController {
 
             // Envía el mensaje al servidor
             serverOut.println(formattedMessage);
+            serverOut.flush();
 
             // Borra el mensaje del TextField
             textField.clear();

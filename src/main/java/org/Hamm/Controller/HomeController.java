@@ -50,13 +50,11 @@ public class HomeController {
 
             // Inicia la conexión con el servidor
             try {
-                socket = new Socket("localhost", 8080); // Reemplaza "localhost" con la dirección IP o el nombre del servidor
-                serverOut = new PrintWriter(socket.getOutputStream(), true);
-
-                // Envía un mensaje de inicio de sesión al servidor
-                serverOut.println("LOGIN:" + userName);
-
-                App.setRoot("room1");
+                /*socket = new Socket("localhost", 8080); // Reemplaza "localhost" con la dirección IP o el nombre del servidor
+                serverOut = new PrintWriter(socket.getOutputStream(), true);*/
+                //serverOut.println("LOGIN:" + userName);
+                String parameter = "LOGIN:" + userName;
+                App.setRoot("room1", parameter);
             } catch (IOException e) {
                 e.printStackTrace();
             }

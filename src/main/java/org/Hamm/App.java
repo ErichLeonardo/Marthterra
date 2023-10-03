@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.Hamm.Controller.ChatController;
 
 import java.io.IOException;
 
@@ -51,10 +52,16 @@ public class App extends Application {
         stage.show();
     }
 
+    public static void setRoot(String fxml,String parameter) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+        scene.setRoot(fxmlLoader.load());
+        ChatController c = fxmlLoader.getController();
+        c.parameter = parameter;
+        c.start();
+    }
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
-
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();

@@ -46,8 +46,8 @@ public class ChatController {
     @FXML
     private void initialize() {
 
-
     }
+
     public void start(){
         // Inicializa la vista ChatController
         // Puedes realizar configuraciones adicionales aquí si es necesario

@@ -11,20 +11,16 @@ public class MessagePersistence {
         try {
             FileWriter writer = new FileWriter(FILENAME, true); // Modo de adjuntar al archivo existente
 
-            // Guardar el mensaje en el archivo con el nuevo formato
-            if (sender.startsWith("LOGIN:")) {
-                // Si el mensaje es un inicio de sesión, guárdalo sin el prefijo "LOGIN:"
-                writer.write("[" + formattedTime + "] " + sender.replace("LOGIN:", "") + "\n");
-            } else {
-                // Si no es un inicio de sesión, guárdalo con el formato de mensaje regular
-                writer.write("[" + formattedTime + "] " + sender + ": " + message + "\n");
-            }
+            // Formatear todos los mensajes de la misma manera, incluyendo el mensaje de inicio de sesión
+            String formattedMessage = "[" + formattedTime + "] " + sender + ": " + message + "\n";
+            writer.write(formattedMessage);
 
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }
 
 

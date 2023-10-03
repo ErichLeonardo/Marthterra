@@ -1,11 +1,15 @@
 package org.Hamm.Controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import org.Hamm.model.User;
 import org.Hamm.util.JAXBManager;
 
@@ -39,6 +43,7 @@ public class ChatController {
 
     @FXML
     private void initialize() {
+
         // Inicializa la vista ChatController
         // Puedes realizar configuraciones adicionales aquí si es necesario
         user = JAXBManager.readUser(); // Intenta leer el nombre de usuario desde el archivo XML
@@ -48,6 +53,8 @@ public class ChatController {
             // Si el archivo no existe o no se pudo leer, puedes manejarlo aquí
             // Por ejemplo, puedes mostrar un mensaje de error o pedir al usuario que ingrese su nombre.
         }
+
+        textArea.setEditable(false);
 
         // Inicia la conexión con el servidor
         try {
@@ -77,19 +84,17 @@ public class ChatController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
             String formattedTime = currentTime.format(formatter);
 
-            // Formatea el mensaje como "usuario (hora): mensaje"
-            String formattedMessage = user.getName() + " (" + formattedTime + "): " + message;
+            // Formatea el mensaje como "usuario: mensaje"
+            String formattedMessage = user.getName() + ": " + message;
 
-            // Muestra el mensaje en el TextArea antes de enviarlo al servidor
-            textArea.appendText(formattedMessage + "\n");
-
-            // Envía el mensaje al servidor sin el prefijo "Cliente dice"
+            // Envía el mensaje al servidor
             serverOut.println(formattedMessage);
 
             // Borra el mensaje del TextField
             textField.clear();
         }
     }
+
 
 
 
@@ -102,13 +107,17 @@ public class ChatController {
                     break;
                 }
 
-                // Muestra el mensaje del servidor en el TextArea
-                textArea.appendText(receivedMessage + "\n");
+                // Omitir tus propios mensajes (comparando con tu nombre de usuario)
+                if (!receivedMessage.startsWith("[" + user.getName() + ":")) {
+                    // Muestra el mensaje del servidor en el TextArea
+                    textArea.appendText(receivedMessage + "\n");
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
 
     // Método para establecer el nombre de usuario en el Label

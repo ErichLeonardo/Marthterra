@@ -70,11 +70,11 @@ public class Server {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
                     String formattedTime = currentTime.format(formatter);
 
-                    // Crear el mensaje con el nombre de usuario, la hora y el contenido del mensaje
-                    String messageWithTime = "[" + formattedTime + "] " + clientUsername + ": " + receivedMessage;
+                    // Formar el mensaje con la hora y el contenido del mensaje
+                    String messageWithTime = "[" + formattedTime + "] " + receivedMessage;
 
                     // Guardar el mensaje en el historial
-                    messagePersistence.saveMessage(clientUsername, receivedMessage, formattedTime);
+                    messagePersistence.saveMessage(clientUsername, messageWithTime, formattedTime);
 
                     System.out.println(messageWithTime);
 

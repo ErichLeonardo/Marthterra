@@ -36,5 +36,10 @@
                 <Font name="System Bold Italic" size="20.0" />
             </font>
         </Label>
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="603.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#meteor">
+         <image>
+            <Image url="@meteor.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

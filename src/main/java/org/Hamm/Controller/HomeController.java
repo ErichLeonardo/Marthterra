@@ -4,10 +4,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.Hamm.App;
 import org.Hamm.model.User;
 import org.Hamm.model.UserHistory;
@@ -24,6 +29,36 @@ public class HomeController {
 
     private Socket socket;
     private PrintWriter serverOut;
+
+    @FXML
+    private void meteor() {
+        // Obtén la referencia al Stage actual
+        Stage stage = (Stage) secondaryButton.getScene().getWindow();
+
+        // Crea una transición de desplazamiento hacia abajo
+        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), stage.getScene().getRoot());
+        translateTransition.setByY(500); // Desplaza hacia abajo en 500 píxeles
+
+        // Crea una transición de atenuación (fade out)
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), stage.getScene().getRoot());
+        fadeTransition.setFromValue(1.0); // Valor de opacidad inicial
+        fadeTransition.setToValue(0.0);   // Valor de opacidad final
+
+        // Combina ambas transiciones en una secuencia
+        ParallelTransition parallelTransition = new ParallelTransition(translateTransition, fadeTransition);
+
+        // Define lo que sucede después de que termine la animación
+        parallelTransition.setOnFinished(event -> {
+            // Configura la opacidad del Stage a 0 para que sea transparente
+            stage.setOpacity(0.0);
+
+            // No es necesario cerrar la ventana, ya que la hemos vuelto transparente
+        });
+
+        // Inicia la animación
+        parallelTransition.play();
+    }
+
 
     @FXML
     private void switchToRoom() throws IOException {

@@ -52,6 +52,7 @@ public class App extends Application {
 
         // Abre la ventana de Captcha
         openCaptchaWindow(primaryStage);
+
     }
 
     private void openCaptchaWindow(Stage primaryStage) {
@@ -82,6 +83,7 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
+
 
     public static void setRoot(String fxml,String parameter) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));

@@ -1,11 +1,16 @@
 package org.Hamm.Controller;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.Hamm.model.User;
 import org.Hamm.util.JAXBManager;
 
@@ -119,6 +124,31 @@ public class ChatController {
         }
     }
 
+    @FXML
+    private void meteor() {
+        // Obtén la referencia al Stage actual
+        Stage stage = (Stage) textArea.getScene().getWindow();
+
+        // Crea una transición de desplazamiento hacia abajo
+        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), stage.getScene().getRoot());
+        translateTransition.setByY(500); // Desplaza hacia abajo en 500 píxeles
+
+        // Crea una transición de atenuación (fade out)
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), stage.getScene().getRoot());
+        fadeTransition.setFromValue(1.0); // Valor de opacidad inicial
+        fadeTransition.setToValue(0.0);   // Valor de opacidad final
+
+        // Combina ambas transiciones en una secuencia
+        ParallelTransition parallelTransition = new ParallelTransition(translateTransition, fadeTransition);
+
+        // Define lo que sucede después de que termine la animación
+        parallelTransition.setOnFinished(event -> {
+            stage.close(); // Cierra la ventana después de la animación
+        });
+
+        // Inicia la animación
+        parallelTransition.play();
+    }
 
 
     // Método para establecer el nombre de usuario en el Label

@@ -2,13 +2,13 @@ package org.Hamm;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.Hamm.Controller.CaptchaController;
 import org.Hamm.Controller.ChatController;
 
 import java.io.IOException;
@@ -23,9 +23,10 @@ public class App extends Application {
     private double yOffset = 0;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage primaryStage) throws IOException {
+        // Inicializa la ventana principal sin mostrarla
+        primaryStage.initStyle(StageStyle.UNDECORATED);
         scene = new Scene(loadFXML("home"), 640, 348);
-        stage.initStyle(StageStyle.UNDECORATED);
 
         // Agrega el evento de presionar el ratón para arrastrar la ventana
         scene.setOnMousePressed(event -> {
@@ -35,8 +36,8 @@ public class App extends Application {
 
         // Agrega el evento de arrastrar la ventana
         scene.setOnMouseDragged(event -> {
-            stage.setX(event.getScreenX() - xOffset);
-            stage.setY(event.getScreenY() - yOffset);
+            primaryStage.setX(event.getScreenX() - xOffset);
+            primaryStage.setY(event.getScreenY() - yOffset);
         });
 
         // Carga la imagen del cursor personalizado con fondo transparente
@@ -47,9 +48,39 @@ public class App extends Application {
             scene.setCursor(imageCursor);
         });
 
+        primaryStage.setScene(scene);
 
-        stage.setScene(scene);
-        stage.show();
+        // Abre la ventana de Captcha
+        openCaptchaWindow(primaryStage);
+    }
+
+    private void openCaptchaWindow(Stage primaryStage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/Hamm/Captcha.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage captchaStage = new Stage();
+            captchaStage.setTitle("Captcha Test");
+            captchaStage.setScene(scene);
+            captchaStage.initStyle(StageStyle.UNDECORATED);
+
+            CaptchaController captchaController = loader.getController();
+            captchaController.initialize();
+
+            captchaController.setCaptchaVerifiedListener(isCaptchaCorrect -> {
+                if (isCaptchaCorrect) {
+                    // Si el captcha se verifica correctamente, muestra la ventana principal
+                    primaryStage.show();
+
+                    // Cierra la ventana de Captcha
+                    captchaStage.close();
+                }
+            });
+
+            captchaStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void setRoot(String fxml,String parameter) throws IOException {
@@ -59,9 +90,11 @@ public class App extends Application {
         c.parameter = parameter;
         c.start();
     }
+
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
+
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
@@ -70,5 +103,4 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
-
 }

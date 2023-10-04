@@ -5,6 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Region;
 import org.Hamm.model.CaptchaGenerator;
 
 import java.util.HashMap;
@@ -61,6 +62,17 @@ public class CaptchaController {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
+
+        // Cargar el archivo CSS de estilos
+        String cssPath = getClass().getResource("/org/Hamm/styles.css").toExternalForm();
+        alert.getDialogPane().getStylesheets().add(cssPath);
+
+        // Aplicar estilos al cuadro de diálogo
+        alert.getDialogPane().getStyleClass().add("dialog-pane");
+
+        // Ajustar el tamaño del cuadro de diálogo según el contenido
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+
         alert.showAndWait();
     }
 }

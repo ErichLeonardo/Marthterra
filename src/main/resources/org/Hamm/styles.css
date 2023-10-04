@@ -1,0 +1,15 @@
+/* Estilo para el cuadro de diálogo */
+.dialog-pane {
+    -fx-background-color: #333333; /* Color de fondo */
+}
+
+/* Estilo para el encabezado del cuadro de diálogo */
+.dialog-pane .header-panel {
+    -fx-background-color: #444444; /* Color de fondo del encabezado */
+}
+
+/* Estilo para el contenido del cuadro de diálogo */
+.dialog-pane .content {
+    -fx-background-color: #333333; /* Color de fondo del contenido */
+    -fx-text-fill: white; /* Color del texto */
+}

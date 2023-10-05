@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import org.Hamm.App;
 import org.Hamm.model.User;
@@ -49,10 +50,7 @@ public class HomeController {
 
         // Define lo que sucede después de que termine la animación
         parallelTransition.setOnFinished(event -> {
-            // Configura la opacidad del Stage a 0 para que sea transparente
-            stage.setOpacity(0.0);
-
-            // No es necesario cerrar la ventana, ya que la hemos vuelto transparente
+            stage.close();
         });
 
         // Inicia la animación

@@ -11,9 +11,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="349.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Hamm.Controller.CaptchaController">
     <children>
-            <ImageView depthTest="DISABLE" fitHeight="361.0" fitWidth="645.0" layoutX="-11.0" layoutY="-6.0" preserveRatio="true">
+            <ImageView depthTest="DISABLE" fitHeight="382.0" fitWidth="623.0" layoutX="-16.0" layoutY="-8.0" preserveRatio="true">
                 <image>
-                    <Image url="@space.jpg" />
+                    <Image url="@first.gif" />
                 </image>
                 <viewport>
                     <Rectangle2D />

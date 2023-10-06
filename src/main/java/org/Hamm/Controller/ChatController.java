@@ -12,7 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.Hamm.model.Room;
 import org.Hamm.model.User;
 import org.Hamm.util.JAXBManager;
 

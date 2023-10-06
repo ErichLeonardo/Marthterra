@@ -1,8 +1,6 @@
 package org.Hamm.minisockets;
 
 import java.io.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class MessagePersistence {
     private static final String FILENAME = "message_history.txt"; // Nombre del archivo de historial
@@ -22,7 +20,3 @@ public class MessagePersistence {
     }
 
 }
-
-
-
-

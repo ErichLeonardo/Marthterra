@@ -97,18 +97,16 @@ public class HomeController implements Initializable {
             // Guarda el historial actualizado en un archivo XML
             JAXBManager.writeUserHistory(userHistory);
 
-            // Inicia la conexión con el servidor
-            try {
-                /*socket = new Socket("localhost", 8080); // Reemplaza "localhost" con la dirección IP o el nombre del servidor
-                serverOut = new PrintWriter(socket.getOutputStream(), true);*/
-                //serverOut.println("LOGIN:" + userName);
-                String parameter = "LOGIN:" + userName;
-                App.setRoot("room1", parameter, selectedRoom);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            // Inicia la conexión con el servidor (si es necesario)
+
+            // Ahora, abre la vista de sala correspondiente
+            String roomFXML = "room" + selectedRoom; // Nombre del archivo FXML de la sala
+            String parameter = "LOGIN:" + userName; // Parámetro a pasar a la vista de sala
+
+            App.setRoot(roomFXML, parameter, selectedRoom);
         } else {
             // Puedes mostrar un mensaje de error al usuario aquí si el campo está vacío
         }
     }
+
 }

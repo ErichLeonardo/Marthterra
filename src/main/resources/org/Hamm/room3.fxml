@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="348.0" prefWidth="615.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Hamm.Controller.ChatController3">
+    <children>
+        <ImageView depthTest="DISABLE" fitHeight="371.0" fitWidth="653.0" preserveRatio="true">
+            <image>
+                <Image url="@star.jpg" />
+            </image>
+            <viewport>
+                <Rectangle2D />
+            </viewport>
+        </ImageView>
+        <Button fx:id="primaryButton" layoutX="14.0" layoutY="13.0" onAction="#switchToHome" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 5px;" text="HOME" textFill="WHITE">
+            <font>
+                <Font name="System Bold Italic" size="12.0" />
+            </font></Button>
+        <Button fx:id="sendButton" layoutX="442.0" layoutY="311.0" mnemonicParsing="false" onAction="#handleSendButton" prefHeight="26.0" prefWidth="49.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 5px;" text="Send" textFill="WHITE">
+            <font>
+                <Font name="System Bold Italic" size="12.0" />
+            </font></Button>
+        <TextField fx:id="textField" layoutX="123.0" layoutY="312.0" prefHeight="26.0" prefWidth="311.0" />
+        <TextArea fx:id="textArea" layoutX="14.0" layoutY="44.0" prefHeight="256.0" prefWidth="477.0" style="-fx-border-radius: 15px;" />
+        <ListView layoutX="508.0" layoutY="45.0" prefHeight="256.0" prefWidth="119.0" style="-fx-border-radius: 15px;" />
+        <Label layoutX="508.0" layoutY="18.0" text="Online Users" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font></Label>
+        <Hyperlink layoutX="512.0" layoutY="313.0" prefHeight="24.0" prefWidth="110.0" text="Hyperlink" />
+        <Label layoutX="249.0" layoutY="13.0" prefHeight="24.0" prefWidth="143.0" text="MARTECHAT" textFill="WHITE">
+            <font>
+                <Font name="Rockwell" size="20.0" />
+            </font>
+        </Label>
+        <Label fx:id="userNameLabel" layoutX="14.0" layoutY="317.0" textFill="WHITE">
+            <font>
+                <Font name="System Bold Italic" size="12.0" />
+            </font>
+        </Label>
+        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fitHeight="27.0" fitWidth="26.0" layoutX="603.0" layoutY="12.0" onMouseClicked="#meteor" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@meteor.png" />
+            </image>
+        </ImageView>
+        <Label fx:id="roomid" layoutX="392.0" layoutY="16.0" textFill="WHITE">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>

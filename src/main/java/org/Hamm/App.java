@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.Hamm.Controller.CaptchaController;
 import org.Hamm.Controller.ChatController;
+import org.Hamm.Controller.ChatController2;
+import org.Hamm.Controller.ChatController3;
 
 import java.io.IOException;
 
@@ -87,11 +89,27 @@ public class App extends Application {
 
     public static void setRoot(String fxml, String parameter, String selectedRoom) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        scene.setRoot(fxmlLoader.load());
-        ChatController c = fxmlLoader.getController();
-        c.parameter = parameter;
-        c.start(selectedRoom);
+        Parent root = fxmlLoader.load();
+        scene.setRoot(root);
+
+        // Obtén el controlador correspondiente según la sala seleccionada
+        Object controller = fxmlLoader.getController();
+
+        if (controller instanceof ChatController) {
+            ChatController chatController = (ChatController) controller;
+            chatController.parameter = parameter;
+            chatController.start(selectedRoom);
+        } else if (controller instanceof ChatController2) {
+            ChatController2 chatController2 = (ChatController2) controller;
+            chatController2.parameter = parameter;
+            chatController2.start(selectedRoom);
+        } else if (controller instanceof ChatController3) {
+            ChatController3 chatController3 = (ChatController3) controller;
+            chatController3.parameter = parameter;
+            chatController3.start(selectedRoom);
+        }
     }
+
 
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));

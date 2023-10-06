@@ -85,12 +85,12 @@ public class App extends Application {
     }
 
 
-    public static void setRoot(String fxml,String parameter) throws IOException {
+    public static void setRoot(String fxml, String parameter, String selectedRoom) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         scene.setRoot(fxmlLoader.load());
         ChatController c = fxmlLoader.getController();
         c.parameter = parameter;
-        c.start();
+        c.start(selectedRoom);
     }
 
     public static void setRoot(String fxml) throws IOException {

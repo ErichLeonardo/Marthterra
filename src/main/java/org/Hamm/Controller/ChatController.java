@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.Hamm.model.Room;
 import org.Hamm.model.User;
 import org.Hamm.util.JAXBManager;
 
@@ -35,6 +36,7 @@ public class ChatController {
     private TextArea textArea;
     @FXML
     private Label roomid;
+
     @FXML
     private ListView<String> listView;
     @FXML
@@ -55,10 +57,12 @@ public class ChatController {
         });
     }
 
-    public void start(){
+
+    public void start(String selectedRoom){
         // Inicializa la vista ChatController
         // Puedes realizar configuraciones adicionales aquí si es necesario
         user = JAXBManager.readUser(); // Intenta leer el nombre de usuario desde el archivo XML
+        roomid.setText("Room: " + selectedRoom);
         if (user != null) {
             setUserName(user.getName()); // Configura el nombre de usuario en el Label
         } else {
@@ -82,6 +86,8 @@ public class ChatController {
             e.printStackTrace();
         }
     }
+
+
     @FXML
     private void switchToHome() {
         // Implementa el código para cambiar a la vista Home si es necesario

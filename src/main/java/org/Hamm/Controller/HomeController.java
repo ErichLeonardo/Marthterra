@@ -19,6 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.Hamm.App;
+import org.Hamm.model.Room;
 import org.Hamm.model.User;
 import org.Hamm.model.UserHistory;
 import org.Hamm.util.JAXBManager;
@@ -31,15 +32,13 @@ public class HomeController implements Initializable {
     private ChoiceBox<String> rooms;
     @FXML
     private TextField textField;
-    private Socket socket;
-    private PrintWriter serverOut;
 
     @Override
-    public void initialize(URL location, ResourceBundle resourses){
+    public void initialize(URL location, ResourceBundle resourses) {
         ObservableList<String> optionsRooms = FXCollections.observableArrayList(
-         "Room 1",
-         "Room 2",
-         "Room 3"
+                "1",
+                "2",
+                "3"
         );
         rooms.setItems(optionsRooms);
     }
@@ -70,17 +69,21 @@ public class HomeController implements Initializable {
         parallelTransition.play();
     }
 
-
     @FXML
     private void switchToRoom() throws IOException {
         // Obtén el nombre del usuario desde el campo de texto
         String userName = textField.getText();
+        String selectedRoom = rooms.getValue(); // Obtén la sala seleccionada
 
         // Verifica si el nombre de usuario no está vacío
-        if (!userName.isEmpty()) {
+        if (!userName.isEmpty() && selectedRoom != null) {
             // Crea un objeto User y establece el nombre
             User user = new User();
             user.setName(userName);
+
+            // Crear un objeto Room y configurarlo con la sala seleccionada
+            Room room = new Room();
+            room.setName(rooms.getValue()); // Obtén el nombre de la sala seleccionada
 
             // Guarda el usuario en su archivo XML individual
             JAXBManager.writeUser(user);
@@ -100,7 +103,7 @@ public class HomeController implements Initializable {
                 serverOut = new PrintWriter(socket.getOutputStream(), true);*/
                 //serverOut.println("LOGIN:" + userName);
                 String parameter = "LOGIN:" + userName;
-                App.setRoot("room1", parameter);
+                App.setRoot("room1", parameter, selectedRoom);
             } catch (IOException e) {
                 e.printStackTrace();
             }

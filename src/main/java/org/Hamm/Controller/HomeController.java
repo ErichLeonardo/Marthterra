@@ -3,33 +3,46 @@ package org.Hamm.Controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import org.Hamm.App;
 import org.Hamm.model.User;
 import org.Hamm.model.UserHistory;
 import org.Hamm.util.JAXBManager;
 
-public class HomeController {
+public class HomeController implements Initializable {
 
     @FXML
     private Button secondaryButton;
     @FXML
-    private ChoiceBox choiceBox;
+    private ChoiceBox<String> rooms;
     @FXML
     private TextField textField;
-
     private Socket socket;
     private PrintWriter serverOut;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resourses){
+        ObservableList<String> optionsRooms = FXCollections.observableArrayList(
+         "Room 1",
+         "Room 2",
+         "Room 3"
+        );
+        rooms.setItems(optionsRooms);
+    }
 
     @FXML
     private void meteor() {

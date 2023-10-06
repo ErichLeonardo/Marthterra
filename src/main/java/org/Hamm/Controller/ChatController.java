@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.Hamm.model.User;
@@ -33,6 +34,8 @@ public class ChatController {
     @FXML
     private TextArea textArea;
     @FXML
+    private Label roomid;
+    @FXML
     private ListView<String> listView;
     @FXML
     private Label userNameLabel; // Agrega un campo Label para mostrar el nombre de usuario
@@ -41,12 +44,15 @@ public class ChatController {
     private Socket socket;
     private BufferedReader serverIn;
     private PrintWriter serverOut;
-
     public String parameter;
 
     @FXML
     private void initialize() {
-
+        textField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                handleSendButton();
+            }
+        });
     }
 
     public void start(){

@@ -10,15 +10,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="348.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Hamm.Controller.HomeController">
+<AnchorPane prefHeight="348.0" prefWidth="615.0" style="-fx-background-color: #020203;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Hamm.Controller.HomeController">
     <children>
-        <ImageView depthTest="DISABLE" fitHeight="364.0" fitWidth="655.0" preserveRatio="true">
-            <image>
-                <Image url="@marth.jpg" />
-            </image>
+        <ImageView depthTest="DISABLE" fitHeight="589.0" fitWidth="652.0" layoutX="412.0" layoutY="2.0" preserveRatio="true">
             <viewport>
                 <Rectangle2D />
             </viewport>
+         <image>
+            <Image url="@star.jpg" />
+         </image>
         </ImageView>
         <Button fx:id="secondaryButton" layoutX="469.0" layoutY="290.0" onAction="#switchToRoom" style="-fx-background-color: TRANSPARENT;" text="START" textFill="WHITE">
             <font>
@@ -41,5 +41,9 @@
             <Image url="@meteor.png" />
          </image>
       </ImageView>
+      <ImageView fitHeight="406.0" fitWidth="405.0" layoutY="-28.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@yes.gif" />
+         </image></ImageView>
     </children>
 </AnchorPane>

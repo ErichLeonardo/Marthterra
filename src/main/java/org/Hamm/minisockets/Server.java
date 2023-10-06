@@ -16,6 +16,7 @@ public class Server {
         ServerSocket serverSocket = null;
         boolean serverListening = false;
 
+
         try {
             serverSocket = new ServerSocket(8080);
             serverListening = true;

@@ -5,15 +5,17 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Server {
     private static MessagePersistence messagePersistence; // Instancia compartida
-    private static Map<String, List<PrintWriter>> roomUsers = new HashMap<>(); // Mapa para almacenar usuarios en cada sala
+    private static List<PrintWriter> clientWriters = new ArrayList<>(); // Almacena las referencias PrintWriter de los clientes
 
     public static void main(String[] args) {
         ServerSocket serverSocket = null;
         boolean serverListening = false;
+
 
         try {
             serverSocket = new ServerSocket(8080);
@@ -31,21 +33,9 @@ public class Server {
                     Socket socket = serverSocket.accept();
                     //System.out.println("Alguien llega");
                     PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                    clientWriters.add(out); // Agrega el PrintWriter del cliente a la lista
 
-                    // Lee el nombre de usuario del cliente
-                    BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                    String clientUsername = in.readLine();
-
-                    // Lee la sala a la que el cliente desea unirse
-                    String selectedRoom = in.readLine();
-
-                    // Verifica si la sala ya existe, de lo contrario, créala
-                    roomUsers.putIfAbsent(selectedRoom, new ArrayList<>());
-
-                    List<PrintWriter> roomWriters = roomUsers.get(selectedRoom);
-                    roomWriters.add(out); // Agrega el PrintWriter del cliente a la lista de la sala seleccionada
-
-                    Thread clientThread = new ClientHandler(socket, out, clientUsername, selectedRoom);
+                    Thread clientThread = new ClientHandler(socket, out);
                     clientThread.start();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -57,14 +47,10 @@ public class Server {
     private static class ClientHandler extends Thread {
         private Socket socket;
         private PrintWriter clientOut; // Referencia PrintWriter del cliente
-        private String clientUsername;
-        private String selectedRoom;
 
-        public ClientHandler(Socket socket, PrintWriter clientOut, String clientUsername, String selectedRoom) {
+        public ClientHandler(Socket socket, PrintWriter clientOut) {
             this.socket = socket;
             this.clientOut = clientOut;
-            this.clientUsername = clientUsername;
-            this.selectedRoom = selectedRoom;
         }
 
         @Override
@@ -72,8 +58,14 @@ public class Server {
             try {
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
+                // Pide al cliente su nombre de usuario y guárdalo
+                //System.out.println("Esperando nombre de usuario");
+                String clientUsername = in.readLine();
+                //System.out.println("Listo para comunicar con "+clientUsername);
                 while (true) {
-                    String receivedMessage = in.readLine();
+                    String receivedMessage;
+                    receivedMessage = in.readLine();
+                    //while((receivedMessage= in.readLine())==null);
 
                     if (receivedMessage == null || receivedMessage.equalsIgnoreCase("exit")) {
                         break;
@@ -85,17 +77,17 @@ public class Server {
                     String formattedTime = currentTime.format(formatter);
 
                     // Formar el mensaje con la hora y el contenido del mensaje
-                    String messageWithTime = "[" + formattedTime + "] " + clientUsername + ": " + receivedMessage;
+                    String messageWithTime = "[" + formattedTime + "] " + receivedMessage;
 
-                    // Guardar el mensaje en el historial de la sala correspondiente
-                    messagePersistence.saveMessage(clientUsername, receivedMessage, formattedTime, selectedRoom);
+                    // Guardar el mensaje en el historial
+                    messagePersistence.saveMessage(clientUsername, messageWithTime, formattedTime);
 
-                    System.out.println("[" + formattedTime + "] " + clientUsername + ": " + receivedMessage);
+                    System.out.println(messageWithTime);
 
-                    // Reenviar el mensaje a todos los clientes en la misma sala
-                    List<PrintWriter> roomWriters = roomUsers.get(selectedRoom);
-                    for (PrintWriter writer : roomWriters) {
-                        writer.println("[" + formattedTime + "] " + clientUsername + ": " + receivedMessage);
+                    // Reenviar el mensaje a todos los clientes (incluido el remitente original)
+                    for (PrintWriter writer : clientWriters) {
+                        // Enviar el mensaje con un delimitador
+                        writer.println(messageWithTime);
                         writer.flush();
                     }
                 }
@@ -105,6 +97,5 @@ public class Server {
                 e.printStackTrace();
             }
         }
-
     }
 }

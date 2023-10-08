@@ -1,13 +1,17 @@
 package org.Hamm.minisockets;
 
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class MessagePersistence {
-    private static final String FILENAME = "message_history.txt"; // Nombre del archivo de historial
+    private static ConcurrentHashMap<Integer, String> portToFileMap = new ConcurrentHashMap<>();
 
-    public static synchronized void saveMessage(String sender, String message, String formattedTime) {
+    public static synchronized void saveMessage(int port, String sender, String message, String formattedTime) {
         try {
-            FileWriter writer = new FileWriter(FILENAME, true); // Modo de adjuntar al archivo existente
+            String filename = getOrCreateFilenameForPort(port);
+            FileWriter writer = new FileWriter(filename, true); // Modo de adjuntar al archivo existente
 
             // Formatear todos los mensajes de la misma manera, incluyendo el mensaje de inicio de sesión
             String formattedMessage = "[" + formattedTime + "] " + sender + ": " + message + "\n";
@@ -19,4 +23,7 @@ public class MessagePersistence {
         }
     }
 
+    private static String getOrCreateFilenameForPort(int port) {
+        return portToFileMap.computeIfAbsent(port, k -> "message_history_" + port + ".txt");
+    }
 }

@@ -105,7 +105,7 @@ public class Server {
                     String messageWithTime = "[" + formattedTime + "] " + receivedMessage;
 
                     // Guardar el mensaje en el historial
-                    messagePersistence.saveMessage(clientUsername, messageWithTime, formattedTime);
+                    messagePersistence.saveMessage(port,clientUsername, messageWithTime, formattedTime);
 
                     System.out.println(messageWithTime);
 

@@ -22,6 +22,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class ChatController {
 
@@ -88,7 +89,7 @@ public class ChatController {
 
 
     @FXML
-    private void switchToHome() {
+    private void switchToHome() throws IOException {
         // Implementa el código para cambiar a la vista Home si es necesario
     }
 
@@ -160,6 +161,7 @@ public class ChatController {
         // Inicia la animación
         parallelTransition.play();
     }
+
 
 
     // Método para establecer el nombre de usuario en el Label

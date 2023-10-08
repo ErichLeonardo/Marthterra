@@ -7,35 +7,61 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Server {
     private static MessagePersistence messagePersistence; // Instancia compartida
-    private static List<PrintWriter> clientWriters = new ArrayList<>(); // Almacena las referencias PrintWriter de los clientes
+    private static ConcurrentHashMap<Integer, List<PrintWriter>> clientWritersMap = new ConcurrentHashMap<>();
 
     public static void main(String[] args) {
-        ServerSocket serverSocket = null;
-        boolean serverListening = false;
-
+        ServerSocket serverSocket8080 = null;
+        ServerSocket serverSocket5050 = null;
+        ServerSocket serverSocket9090 = null;
 
         try {
-            serverSocket = new ServerSocket(8080);
-            serverListening = true;
-        } catch (IOException e) {
-            System.out.println("Server: No se puede ejecutar el servidor en el puerto 8080");
-        }
+            serverSocket8080 = new ServerSocket(8080);
+            serverSocket5050 = new ServerSocket(5050);
+            serverSocket9090 = new ServerSocket(9090);
 
-        if (serverListening) {
             messagePersistence = new MessagePersistence(); // Inicializa la instancia compartida
             System.out.println("Server: Listo para recibir mensajes");
 
+            // Inicia un hilo para cada puerto
+            Thread clientHandler8080 = new ClientHandler(serverSocket8080, 8080);
+            Thread clientHandler5050 = new ClientHandler(serverSocket5050, 5050);
+            Thread clientHandler9090 = new ClientHandler(serverSocket9090, 9090);
+
+            clientHandler8080.start();
+            clientHandler5050.start();
+            clientHandler9090.start();
+        } catch (IOException e) {
+            System.out.println("Server: No se puede ejecutar el servidor en uno de los puertos");
+        }
+    }
+
+    private static class ClientHandler extends Thread {
+        private ServerSocket serverSocket;
+        private int port;
+
+        public ClientHandler(ServerSocket serverSocket, int port) {
+            this.serverSocket = serverSocket;
+            this.port = port;
+        }
+
+        @Override
+        public void run() {
             while (true) {
                 try {
                     Socket socket = serverSocket.accept();
-                    //System.out.println("Alguien llega");
                     PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+
+                    // Obtén la lista de escritores de cliente para el puerto actual
+                    List<PrintWriter> clientWriters = clientWritersMap.computeIfAbsent(port, k -> new CopyOnWriteArrayList<>());
+
                     clientWriters.add(out); // Agrega el PrintWriter del cliente a la lista
 
-                    Thread clientThread = new ClientHandler(socket, out);
+                    Thread clientThread = new ClientConnectionHandler(socket, out, port);
                     clientThread.start();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -44,13 +70,15 @@ public class Server {
         }
     }
 
-    private static class ClientHandler extends Thread {
+    private static class ClientConnectionHandler extends Thread {
         private Socket socket;
         private PrintWriter clientOut; // Referencia PrintWriter del cliente
+        private int port;
 
-        public ClientHandler(Socket socket, PrintWriter clientOut) {
+        public ClientConnectionHandler(Socket socket, PrintWriter clientOut, int port) {
             this.socket = socket;
             this.clientOut = clientOut;
+            this.port = port;
         }
 
         @Override
@@ -59,13 +87,10 @@ public class Server {
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
                 // Pide al cliente su nombre de usuario y guárdalo
-                //System.out.println("Esperando nombre de usuario");
                 String clientUsername = in.readLine();
-                //System.out.println("Listo para comunicar con "+clientUsername);
+
                 while (true) {
-                    String receivedMessage;
-                    receivedMessage = in.readLine();
-                    //while((receivedMessage= in.readLine())==null);
+                    String receivedMessage = in.readLine();
 
                     if (receivedMessage == null || receivedMessage.equalsIgnoreCase("exit")) {
                         break;
@@ -84,11 +109,14 @@ public class Server {
 
                     System.out.println(messageWithTime);
 
-                    // Reenviar el mensaje a todos los clientes (incluido el remitente original)
-                    for (PrintWriter writer : clientWriters) {
-                        // Enviar el mensaje con un delimitador
-                        writer.println(messageWithTime);
-                        writer.flush();
+                    // Reenviar el mensaje a todos los clientes de la misma sala (puerto)
+                    List<PrintWriter> clientWriters = clientWritersMap.get(port);
+                    if (clientWriters != null) {
+                        for (PrintWriter writer : clientWriters) {
+                            // Enviar el mensaje con un delimitador
+                            writer.println(messageWithTime);
+                            writer.flush();
+                        }
                     }
                 }
 

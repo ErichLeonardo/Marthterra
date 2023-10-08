@@ -73,7 +73,7 @@ public class ChatController3 {
 
         // Inicia la conexión con el servidor
         try {
-            socket = new Socket("localhost", 8080); // Reemplaza "localhost" con la dirección IP o el nombre del servidor
+            socket = new Socket("localhost", 9090); // Reemplaza "localhost" con la dirección IP o el nombre del servidor
             serverIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             serverOut = new PrintWriter(socket.getOutputStream(), true);
             serverOut.println(this.parameter);

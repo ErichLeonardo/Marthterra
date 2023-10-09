@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.Hamm.App;
 import org.Hamm.model.User;
 import org.Hamm.util.JAXBManager;
 
@@ -90,7 +91,8 @@ public class ChatController {
 
     @FXML
     private void switchToHome() throws IOException {
-        // Implementa el código para cambiar a la vista Home si es necesario
+        App.setRoot("home");
+
     }
 
     @FXML

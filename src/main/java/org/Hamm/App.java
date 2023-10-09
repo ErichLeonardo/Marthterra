@@ -107,12 +107,25 @@ public class App extends Application {
             ChatController3 chatController3 = (ChatController3) controller;
             chatController3.parameter = parameter;
             chatController3.start(selectedRoom);
+
+            // Ajusta el tamaño de la ventana para ChatController3
+            Stage stage = (Stage) scene.getWindow();
+            stage.setWidth(800.0);
+            stage.setHeight(445.0);
         }
     }
 
 
     public static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+        Parent root = loadFXML(fxml);
+        scene.setRoot(root);
+
+        if (fxml.equals("home")) {
+            // Ajusta el tamaño de la ventana de la aplicación cuando vuelves a "home"
+            Stage stage = (Stage) scene.getWindow();
+            stage.setWidth(640);  // Establece el ancho deseado
+            stage.setHeight(348); // Establece el alto deseado
+        }
     }
 
     private static Parent loadFXML(String fxml) throws IOException {

@@ -9,16 +9,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.Hamm.App;
 import org.Hamm.model.User;
 import org.Hamm.util.JAXBManager;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -35,6 +37,10 @@ public class ChatController3 {
     private TextArea textArea;
     @FXML
     private Label roomid;
+    @FXML
+    private Button shareButton;
+    @FXML
+    private Pane panel;
 
     @FXML
     private ListView<String> listView;
@@ -88,8 +94,8 @@ public class ChatController3 {
 
 
     @FXML
-    private void switchToHome() {
-        // Implementa el código para cambiar a la vista Home si es necesario
+    private void switchToHome() throws IOException {
+        App.setRoot("home");
     }
 
     @FXML
@@ -134,6 +140,41 @@ public class ChatController3 {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    public void handleShareButton() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.mp4"),
+                new FileChooser.ExtensionFilter("Todos los archivos", "*.*")
+        );
+
+        File selectedFile = fileChooser.showOpenDialog(primaryButton.getScene().getWindow());
+
+        if (selectedFile != null) {
+            try {
+                // Lee el archivo seleccionado y crea una imagen a partir de él
+                Image sharedImage = new Image(selectedFile.toURI().toString());
+
+                // Crea un ImageView para mostrar la imagen compartida
+                ImageView imageView = new ImageView(sharedImage);
+
+                // Configura el tamaño del ImageView
+                imageView.setFitWidth(250.0); // Ajusta el tamaño según tus preferencias
+                imageView.setFitHeight(250.0);
+
+                // Agrega el ImageView al Pane para mostrar la imagen
+                panel.getChildren().add(imageView);
+
+                // Muestra un mensaje en el TextArea para indicar que se compartió un archivo
+                textArea.appendText("Se ha compartido: " + selectedFile.getName() + "\n");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 
     @FXML
     private void meteor() {

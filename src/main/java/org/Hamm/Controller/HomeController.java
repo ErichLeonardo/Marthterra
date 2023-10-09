@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -105,7 +106,15 @@ public class HomeController implements Initializable {
 
             App.setRoot(roomFXML, parameter, selectedRoom);
         } else {
-            // Puedes mostrar un mensaje de error al usuario aquí si el campo está vacío
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            if (userName.isEmpty()) {
+                alert.setContentText("Por favor, introduce tu nick.");
+            } else {
+                alert.setContentText("Selecciona una sala antes de continuar.");
+            }
+            alert.showAndWait();
         }
     }
 

@@ -1,8 +1,6 @@
 package org.Hamm.Controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -110,9 +108,9 @@ public class HomeController implements Initializable {
             alert.setTitle("Error");
             alert.setHeaderText(null);
             if (userName.isEmpty()) {
-                alert.setContentText("Por favor, introduce tu nick.");
+                alert.setContentText("Please enter your nickname.");
             } else {
-                alert.setContentText("Selecciona una sala antes de continuar.");
+                alert.setContentText("Please select a room before continuing.");
             }
             alert.showAndWait();
         }

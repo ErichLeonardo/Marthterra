@@ -43,12 +43,12 @@ public class CaptchaController {
 
         if (isCaptchaCorrect) {
             // Respuesta correcta, realiza la acción deseada
-            showAlert("Correcto", "Eres un humano.");
+            showAlert("Correct", "You are a human.");
         } else {
             // Respuesta incorrecta, muestra un mensaje de error
-            showAlert("Incorrecto", "Inténtalo de nuevo.");
+            showAlert("Incorrect", "Try again.");
             captchaTextField.clear();
-            initialize(); // Regenera y muestra un nuevo CAPTCHA
+            initialize(); // Regenerate and display a new CAPTCHA
         }
 
         // Notifica al oyente que el CAPTCHA se ha verificado
